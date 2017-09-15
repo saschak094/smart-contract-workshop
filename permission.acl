@@ -1,7 +1,7 @@
 rule AccountAccess {
-    description: "AllAccess - grant everything to everybody."
+    description: "AccountAccess - Owner of the account can read."
     participant(user): "sk.openslava.transaction.User"
-    operation: READ, UPDATE
+    operation: READ
     resource(account): "sk.openslava.transaction.Account"
     condition: (account.owner.getIdentifier() == user.getIdentifier())
     action: ALLOW

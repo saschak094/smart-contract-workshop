@@ -1,6 +1,3 @@
-// getAssetRegistry
-// assetRegistry.update, updateAll
-
 /*
  * @param {sk.openslava.transaction.WireTransfer} transaction - transfer to process
  * @transaction
@@ -11,8 +8,8 @@ function processWireTransfer(transaction) {
     return getAssetRegistry('sk.openslava.transaction.Account')
         .then(function (accountRegistry) {
             return accountRegistry.updateAll([
-                decrementAccountBalance(transaction), 
-                incrementAccountBalance(transaction)
+                decrementSenderBalance(transaction), 
+                incrementReceiverBalance(transaction)
             ]);
         });
 }
@@ -31,23 +28,23 @@ function validateTransaction(transaction) {
 }
 
 /*
- * @param {sk.openslava.transaction.Account} account - user account to increment
+ * @param {sk.openslava.transaction.WireTransfer} transaction - transfer to process
  */
-function incrementAccountBalance(transaction) {
-    var receiverAccount = transaction.receiver;
-    var amount = transaction.amount;
-
-    receiverAccount.balance = receiverAccount.balance + amount;
-    return receiverAccount;
-}
-
-/*
- * @param {sk.openslava.transaction.Account} account - user account to increment
- */
-function decrementAccountBalance(transaction) {
+function decrementSenderBalance(transaction) {
     var senderAccount = transaction.sender;
     var amount = transaction.amount;
 
     senderAccount.balance = senderAccount.balance - amount;
     return senderAccount;
+}
+
+/*
+ * @param {sk.openslava.transaction.WireTransfer} transaction - transfer to process
+ */
+function incrementReceiverBalance(transaction) {
+    var receiverAccount = transaction.receiver;
+    var amount = transaction.amount;
+
+    receiverAccount.balance = receiverAccount.balance + amount;
+    return receiverAccount;
 }

@@ -20,4 +20,4 @@ transaction WireTransfer {
   o String note optional
 }
 
-// crowd funding TODO
+// crowdfunding TODO
