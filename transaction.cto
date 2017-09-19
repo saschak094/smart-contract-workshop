@@ -14,8 +14,8 @@ asset Account identified by iban {
 }
 
 transaction WireTransfer {
-  --> User sender
-  --> User receiver
+  --> Account sender
+  --> Account receiver
   o Double amount
   o String note optional
 }
