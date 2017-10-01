@@ -18,7 +18,7 @@ function processWireTransfer(transaction) {
  * @param {sk.openslava.transaction.WireTransfer} transaction - transfer to process
  */
 function validateTransaction(transaction) {
-    if (transaction.amount <= 0) {
+    if (transaction.amount < 0) {
         throw new Error('Amount must be a positive value');
     }
 
