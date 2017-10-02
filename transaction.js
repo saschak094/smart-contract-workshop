@@ -22,7 +22,7 @@ function validateTransaction(transaction) {
         throw new Error('Amount must be a positive value');
     }
 
-    if (transaction.sender.balance <= transaction.amount) {
+    if (transaction.sender.balance < transaction.amount) {
         throw new Error('Insufficient funds to perform the wiretransfer');
     }
 }
