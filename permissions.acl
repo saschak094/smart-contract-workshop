@@ -1,0 +1,7 @@
+rule NetworkAccess {
+    description: "User can use the system"
+    participant: "sk.openslava.transaction.User"
+    operation: READ, CREATE
+    resource: "org.hyperledger.composer.system.**"
+    action: ALLOW
+}
