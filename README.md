@@ -186,4 +186,44 @@ rule AccountAccess {
 Notice the condition field and how it uses named participant and resource attributes. This ensures that only the owner of the account can operate on it.
 
 # 2nd Phase, Adding Crowd Funding
-TODO: everything
+
+Requirements:
+- any user can start a funding campaign
+- any user can fund the campaign, except for the owner (transaction)
+- owner of the campaign can end campaign
+- if the funding goal was reached transfer funded amount to owner account
+- if the funding goal was not reached transfer funded amount back to original contributors
+
+Hints:
+
+## Events
+```
+event BasicEvent {}
+```
+
+```JavaScript
+/**
+ * @param {org.namespace.BasicEventTransaction} basicEventTransaction
+ * @transaction
+ */
+function basicEventTransaction(basicEventTransaction) {
+    var factory = getFactory();
+
+    var basicEvent = factory.newEvent('org.namespace', 'BasicEvent');
+    emit(basicEvent);
+}
+```
+
+## Storing list of items inside a model
+
+```
+asset Part {}
+
+/**
+ * A car asset. A car is related to a list of parts
+ */
+asset Car {
+  o String model
+  --> Part[] parts
+}
+```

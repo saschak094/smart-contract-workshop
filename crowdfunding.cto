@@ -1,5 +1,3 @@
-// crowdfunding TODO
-
 namespace sk.openslava.crowdfunding
 
 import sk.openslava.transaction.User
@@ -10,28 +8,24 @@ enum Status {
   o CLOSED
 }
 
-asset Project identified by projectId {
-  o String projectId
+asset Campaign identified by campaignId {
+  o String campaignId
   o Status status
   o Double pledgeAmount
   o Double pledgeGoal
-  --> User submitter
+  --> User owner
 }
 
-// Are we trying to reuse WireTransfer functionality for funding projects or doing it separately?
-// I can imagine we could extend Account to create Project that would have its iban - id.
-// And close Project - fundraiser would transfer the money from project account to user account
 transaction FundProject {
   --> Account funder
-  --> Project project
+  --> Campaign campaign
   o Double amount
 }
 
-
-// This would be a transaction that closes the fundraiser
-// If pledger amount was met transfer money to submitter
-// otherwise send the money back to user account -> how to do this using the registries
-transaction CloseProject {
-    --> Project project
-    --> Account submitterAccount
+// This would be a transaction that ends the fundraiser campaign
+// If pledger amount was met transfer money to owner
+// otherwise send the money back to user account
+transaction EndCampaign {
+    --> Campaign campaign
+    --> Account ownerAccount
 }
