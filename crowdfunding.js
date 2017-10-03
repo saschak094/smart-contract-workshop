@@ -1,5 +1,5 @@
 /*
- * @param {sk.openslava.crowdfunding.FundProject} funding - funding to process
+ * @param {sk.openslava.crowdfunding.FundCampaign} funding - funding to process
  * @transaction
  */
 function processFunding(funding) {

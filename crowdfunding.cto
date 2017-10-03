@@ -16,7 +16,7 @@ asset Campaign identified by campaignId {
   --> User owner
 }
 
-transaction FundProject {
+transaction FundCampaign {
   --> Account funder
   --> Campaign campaign
   o Double amount
