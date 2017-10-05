@@ -26,7 +26,7 @@ rule WireTransferAccountAccess {
     resource(r): "sk.openslava.transaction.Account"
     transaction(tx): "sk.openslava.transaction.WireTransfer"
   	condition: (tx.receiver.getIdentifier() == r.getIdentifier())
-	action: ALLOW
+  	action: ALLOW
 }
 
 rule WireTransferOwnAccountAccess {
@@ -44,7 +44,7 @@ rule WireTransferAccess {
     participant(u): "sk.openslava.transaction.User"
     operation: CREATE
     resource(r): "sk.openslava.transaction.WireTransfer"
-    condition: (u.getIdentifier() == resource.sender.getIdentifier())
+    condition: (u.getIdentifier() == resource.sender.owner.getIdentifier())
     action: ALLOW
 }
 
