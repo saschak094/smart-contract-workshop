@@ -15,7 +15,7 @@ A business network in fabric-composer is defined as set of:
 - **access control rules**
 - **query definitions**
 
-# Starting With Wire-Transfer
+# Wire-Transfer
 
 We start by implementing funds transfers between users. In order to do that we'll need to model the problem and its domain first. Once we have a clear understanding of the problem we'll define the operation that will validate inputs and perform the transfer.
 
@@ -28,7 +28,7 @@ Create your models required for WireTransfer
 * Event (amount, operation)
 
 
-## Transaction Function 
+## Transaction Functions
 Validate transaction:
 * amount available and greather than 0 
 * sufficient funds
@@ -49,3 +49,19 @@ Validate transaction:
 * Create two acl rules granting UPDATE and READ Permissions to both sender and receiver Accounts in the transaction context. Hint: Use transaction to bind variable for condition. Condition should check if the receiver/sender is the resource account. 
 
 
+# Crowdfunding 
+
+## Model File 
+* Status (RUNNING, CLOSED)
+* Campaign (id, status, pledgeAmount, pledgeGoal, User)
+* FundCampaign Transaction (Account, Campaign, amount)
+* CloseCampaign Transaction (Account, Campaign)
+
+## Transactions Functions
+* FundCampaign should increase pledgeAmount
+* CloseCampaign transfers the pledgeAmount to the campaign owner if the goal was reached
+
+
+## Bonus: 
+* Extend the ACL rules for crowdfunding
+* If goal was not reached send the money back to the Users. 
