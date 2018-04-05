@@ -1,7 +1,7 @@
-namespace sk.openslava.crowdfunding
+namespace mountain.camp.crowdfunding
 
-import sk.openslava.transaction.User
-import sk.openslava.transaction.Account
+import mountain.camp.transaction.User
+import mountain.camp.transaction.Account
 
 enum Status {
   o RUNNING
@@ -20,12 +20,4 @@ transaction FundCampaign {
   --> Account funder
   --> Campaign campaign
   o Double amount
-}
-
-// This would be a transaction that ends the fundraiser campaign
-// If pledger amount was met transfer money to owner
-// otherwise send the money back to user account
-transaction EndCampaign {
-    --> Campaign campaign
-    --> Account ownerAccount
 }

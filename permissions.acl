@@ -1,5 +1,3 @@
-// global ACL
-
 rule NetworkAccess {
     description: "User can use the system"
     participant: "ANY"
@@ -8,70 +6,65 @@ rule NetworkAccess {
     action: ALLOW
 }
 
-// WireTransfer ACL
+rule UserAccess {
+    description: "User can create user"
+    participant: "ANY"
+    operation: READ, CREATE
+    resource: "mountain.camp.transaction.User"
+    action: ALLOW
+}
 
 rule AccountAccess {
     description: "AccountAccess - Owner of the account can read."
-    participant(user): "sk.openslava.transaction.User"
-    operation: READ
-    resource(account): "sk.openslava.transaction.Account"
-    condition: (account.owner.getIdentifier() == user.getIdentifier())
+    participant: "mountain.camp.transaction.User"
+    operation: READ, CREATE
+    resource: "mountain.camp.transaction.Account"
     action: ALLOW
 }
 
 rule WireTransferAccountAccess {
   	description: "User can update receiver account"
-    participant: "sk.openslava.transaction.User"
+    participant: "mountain.camp.transaction.User"
     operation: UPDATE, READ
-    resource(r): "sk.openslava.transaction.Account"
-    transaction(tx): "sk.openslava.transaction.WireTransfer"
+    resource(r): "mountain.camp.transaction.Account"
+    transaction(tx): "mountain.camp.transaction.WireTransfer"
   	condition: (tx.receiver.getIdentifier() == r.getIdentifier())
   	action: ALLOW
 }
 
 rule WireTransferOwnAccountAccess {
   	description: "User can update receiver account"
-    participant: "sk.openslava.transaction.User"
+    participant: "mountain.camp.transaction.User"
     operation: UPDATE, READ
-    resource(r): "sk.openslava.transaction.Account"
-    transaction(tx): "sk.openslava.transaction.WireTransfer"
+    resource(r): "mountain.camp.transaction.Account"
+    transaction(tx): "mountain.camp.transaction.WireTransfer"
   	condition: (tx.sender.getIdentifier() == r.getIdentifier())
 	action: ALLOW
 }
 
 rule WireTransferAccess {
     description: "User can use the WireTransfer"
-    participant(u): "sk.openslava.transaction.User"
+    participant: "mountain.camp.transaction.User"
     operation: CREATE
-    resource(r): "sk.openslava.transaction.WireTransfer"
-    condition: (u.getIdentifier() == resource.sender.owner.getIdentifier())
+    resource: "mountain.camp.transaction.WireTransfer"
     action: ALLOW
-}
+}	
 
 // CrowdFunding ACL
 
 rule CampaignAccess {
-    description: "User can use the Campaign"
-    participant: "sk.openslava.transaction.User"
-    operation: READ
-    resource: "sk.openslava.crowdfunding.Campaign"
+    description: "User can view the Campaign"
+    participant: "mountain.camp.transaction.User"
+    operation: READ, UPDATE, CREATE
+    resource: "mountain.camp.crowdfunding.Campaign"
     action: ALLOW
 }
 
 rule CampaignFundAccess {
   	description: "User can use the Campaign"
-    participant(u): "sk.openslava.transaction.User"
-    operation: UPDATE
-    resource(r): "sk.openslava.crowdfunding.Campaign"
-    transaction(tx): "sk.openslava.crowdfunding.FundCampaign"
-  	condition: (tx.campaign.getIdentifier() == r.getIdentifier())
+    participant: "mountain.camp.transaction.User"
+    operation: CREATE, UPDATE
+    resource: "mountain.camp.crowdfunding.Campaign"
+    transaction: "mountain.camp.crowdfunding.FundCampaign"
 	action: ALLOW
-}
-
-rule FundCampaignAccess {
-    description: "User can use the Campaign"
-    participant: "sk.openslava.transaction.User"
-    operation: CREATE
-    resource: "sk.openslava.crowdfunding.FundCampaign"
-    action: ALLOW
 }
