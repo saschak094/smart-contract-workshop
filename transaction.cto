@@ -1,6 +1,6 @@
 // basic wiretransfer functionality
 
-namespace sk.openslava.transaction
+namespace mountain.camp.transaction
 
 participant User identified by email {
   o String email

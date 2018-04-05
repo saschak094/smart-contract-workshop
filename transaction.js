@@ -1,21 +1,21 @@
 /*
- * @param {sk.openslava.transaction.WireTransfer} transaction - transfer to process
+ * @param {mountain.camp.transaction.WireTransfer} transaction - transfer to process
  * @transaction
  */
 function processWireTransfer(transaction) {
     validateTransaction(transaction);
 
-    return getAssetRegistry('sk.openslava.transaction.Account')
+    return getAssetRegistry('mountain.camp.transaction.Account')
         .then(function (accountRegistry) {
             return accountRegistry.updateAll([
-                decrementSenderBalance(transaction), 
+                decrementSenderBalance(transaction),
                 incrementReceiverBalance(transaction)
             ]);
         });
 }
 
 /*
- * @param {sk.openslava.transaction.WireTransfer} transaction - transfer to process
+ * @param {mountain.camp.transaction.WireTransfer} transaction - transfer to process
  */
 function validateTransaction(transaction) {
     if (transaction.amount <= 0) {
@@ -28,7 +28,7 @@ function validateTransaction(transaction) {
 }
 
 /*
- * @param {sk.openslava.transaction.WireTransfer} transaction - transfer to process
+ * @param {mountain.camp.transaction.WireTransfer} transaction - transfer to process
  */
 function decrementSenderBalance(transaction) {
     var senderAccount = transaction.sender;
@@ -39,7 +39,7 @@ function decrementSenderBalance(transaction) {
 }
 
 /*
- * @param {sk.openslava.transaction.WireTransfer} transaction - transfer to process
+ * @param {mountain.camp.transaction.WireTransfer} transaction - transfer to process
  */
 function incrementReceiverBalance(transaction) {
     var receiverAccount = transaction.receiver;

@@ -1,0 +1,54 @@
+rule NetworkAccess {
+    description: "User can use the system"
+    participant: "ANY"
+    operation: READ, CREATE
+    resource: "org.hyperledger.composer.system.**"
+    action: ALLOW
+}
+
+rule UserAccess {
+    description: "User can create user"
+    participant: "ANY"
+    operation: READ, CREATE
+    resource: "mountain.camp.transaction.User"
+    action: ALLOW
+}
+
+
+rule AccountAccess {
+    description: "AccountAccess - Owner of the account can read."
+    participant(user): "mountain.camp.transaction.User"
+    operation: READ
+    resource(account): "mountain.camp.transaction.Account"
+    condition: (account.owner.getIdentifier() == user.getIdentifier())
+    action: ALLOW
+}
+
+rule WireTransferAccountAccess {
+  	description: "User can update receiver account"
+    participant: "mountain.camp.transaction.User"
+    operation: UPDATE, READ
+    resource(r): "mountain.camp.transaction.Account"
+    transaction(tx): "mountain.camp.transaction.WireTransfer"
+  	condition: (tx.receiver.getIdentifier() == r.getIdentifier())
+  	action: ALLOW
+}
+
+rule WireTransferOwnAccountAccess {
+  	description: "User can update receiver account"
+    participant: "mountain.camp.transaction.User"
+    operation: UPDATE, READ
+    resource(r): "mountain.camp.transaction.Account"
+    transaction(tx): "mountain.camp.transaction.WireTransfer"
+  	condition: (tx.sender.getIdentifier() == r.getIdentifier())
+	action: ALLOW
+}
+
+rule WireTransferAccess {
+    description: "User can use the WireTransfer"
+    participant(u): "mountain.camp.transaction.User"
+    operation: CREATE
+    resource(r): "mountain.camp.transaction.WireTransfer"
+    condition: (u.getIdentifier() == resource.sender.owner.getIdentifier())
+    action: ALLOW
+}	
